@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TODO</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.css"></link>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<style type="text/css">
+		.nav-bottom-line {
+			height: 60px;
+			border-bottom: 1px solid #222222;
+			margin-bottom: 40px;
+		}
+		.margin_bottom{
+			margin-bottom: 20px;
+		}
+		.todo-icon__yellow {color: #FFC107}
+	</style>
+</head>
+<body>
+	<nav class="nav nav-bottom-line">
+		<div class="nav-left">
+			<a class="nav-item">
+				<span class="icon is-large todo-icon__yellow">
+					<i class="fa fa-check" aria-hidden="true"></i>
+				</span>
+				<div class="logo">
+					<h1 class="title">TODO</h1>
+				</div>
+			</a>
+		</div>
+	</nav>
+	<div id="app">
+		<div class="columns">
+			<div class="column is-offset-1 is-10 columns">
+				<task-list>
+					<i slot="icon" class="fa fa-list" aria-hidden="true"></i>
+					<h4 slot="title" class="title is-4">all tasks</h4>
+					<task slot="tasks" v-for="task in tasks" v-bind:todo="task"></task>
+					<li slot="input" class="box">
+						<article class="media">
+							<div class="media-content">
+								<p class="control">
+									<input class="input" v-model="newTodo" type="text" placeholder="add a new todo..." v-on:keydown.enter="addTask">
+								</p>
+							</div>
+							<div class="media-right">
+								<div class="block">
+									<a class="button" v-on:click="addTask" v-on:keyup.enter="addTask">Button</a>
+								</div>
+							</div>
+						</article>
+					</li>
+				</task-list>
+				<task-list>
+					<i slot="icon" class="fa fa-check" aria-hidden="true"></i>
+					<h4 slot="title" class="title is-4">completed tasks</h4>
+					<task slot="tasks" v-for="task in completedTasks" v-bind:todo="task"></task>
+				</task-list>
+				<task-list>
+					<i slot="icon" class="fa fa-times" aria-hidden="true"></i>
+					<h4 slot="title" class="title is-4">incompleted tasks</h4>
+					<task slot="tasks" v-for="task in incompletedTasks" v-bind:todo="task"></task>
+				</task-list>
+			</div>
+		</div>
+	</div>
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+</body>
+</html>
