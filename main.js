@@ -1,5 +1,5 @@
 Vue.component('task-list', {
-	template: `
+  template: `
 		<div class="column">
 			<div>
 				<article class="media margin_bottom">
@@ -16,15 +16,15 @@ Vue.component('task-list', {
 				</article>
 				<ul>
 					<slot name="tasks"></slot>
-					<slot name="input"></input>
+					<slot name="input"></input></slot>
 				</ul>
 			</div>
 		</div>`
-});
+})
 
 Vue.component('task', {
-	props: ['todo'],
-	template: `
+  props: ['todo'],
+  template: `
 		<li class="box">
 			<article class="media">
 				<figure class="media-left" v-on:click="toggleComplete">
@@ -44,51 +44,52 @@ Vue.component('task', {
 			</article>
 		</li>
 	`,
-	methods: {
-		deleteTask() {
-			const index = app.tasks.indexOf(this.todo);
-			if (index > -1) {
-				app.tasks.splice(index, 1);
-				app.saveTasksInStorage();
-			}
-		},
-		toggleComplete() {
-			this.todo.checked = !this.todo.checked;
-		}
-	}
-
-});
+  methods: {
+    deleteTask () {
+      const index = app.tasks.indexOf(this.todo)
+      if (index > -1) {
+        app.tasks.splice(index, 1)
+        app.saveTasksInStorage()
+      }
+    },
+    toggleComplete () {
+      this.todo.checked = !this.todo.checked
+    }
+  }
+})
 
 const app = new Vue({
-	el: '#app',
-	data: {
-		newTodo: "",
-		tasks: []
-	},
-	mounted() {
-		this.getTasksFromStorage();
-	},
-	computed: {
-		completedTasks() {
-			return this.tasks.filter(task => task.checked);
-		},
-		incompletedTasks() {
-			return this.tasks.filter(task => !task.checked);
-		}
-	},
-	methods: {
-		addTask() {
-			if (this.newTodo === "") return;
-			this.tasks.push({description: this.newTodo, checked: false});
-			this.newTodo = "";
-			this.saveTasksInStorage();
-			this.getTasksFromStorage();
-		},
-		saveTasksInStorage() {
-			localStorage.setItem('tasks', JSON.stringify(this.tasks));
-		},
-		getTasksFromStorage() {
-			this.tasks = JSON.parse(localStorage.getItem('tasks'));
-		}
-	}
+  el: '#app',
+  data: function () {
+    return {
+      newTodo: '',
+      tasks: []
+    }
+  },
+  mounted () {
+    this.getTasksFromStorage()
+  },
+  computed: {
+    completedTasks () {
+      return this.tasks.filter(task => task.checked)
+    },
+    incompletedTasks () {
+      return this.tasks.filter(task => !task.checked)
+    }
+  },
+  methods: {
+    addTask () {
+      if (this.newTodo === '') return
+      this.tasks.push({ description: this.newTodo, checked: false })
+      this.newTodo = ''
+      this.saveTasksInStorage()
+      this.getTasksFromStorage()
+    },
+    saveTasksInStorage () {
+      localStorage.setItem('tasks', JSON.stringify(this.tasks))
+    },
+    getTasksFromStorage () {
+      this.tasks = JSON.parse(localStorage.getItem('tasks')) || []
+    }
+  }
 })
